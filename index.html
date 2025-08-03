@@ -1,133 +1,108 @@
-
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Devenir Membre</title>
+  <title>Formulaire d'Investissement</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
       padding: 20px;
-      max-width: 600px;
-      margin: auto;
-      background-color: #f0f8ff;
     }
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: bold;
+    form {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     input, select, textarea {
       width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      box-sizing: border-box;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
     }
     button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      background-color: #2e8b57;
+      background-color: #007BFF;
       color: white;
       border: none;
+      padding: 10px;
+      border-radius: 4px;
       cursor: pointer;
     }
+    button:hover {
+      background-color: #0056b3;
+    }
     .message {
-      margin-top: 20px;
+      margin-top: 15px;
       font-weight: bold;
     }
   </style>
 </head>
 <body>
 
-  <h2>Devenir Membre</h2>
-  <p>Remplissez le formulaire ci-dessous pour devenir membre et participer à nos rotations.</p>
+<h2 style="text-align:center;">Formulaire d'Investissement</h2>
 
-  <form id="membershipForm">
-    <label>Nom :</label>
-    <input type="text" name="nom" required>
+<form id="investForm">
+  <input type="text" name="nom" placeholder="Nom" required>
+  <input type="text" name="prenom" placeholder="Prénom" required>
+  <input type="date" name="dob" placeholder="Date de naissance" required>
+  <input type="email" name="email" placeholder="Email" required>
+  <input type="text" name="pays" placeholder="Pays" required>
+  <input type="text" name="tel" placeholder="Téléphone" required>
+  <input type="text" name="profession" placeholder="Profession" required>
+  <input type="text" name="piece" placeholder="Type de pièce d'identité" required>
+  <input type="number" name="montant" placeholder="Montant investi (en USD)" required>
+  <select name="frequence" required>
+    <option value="">Fréquence</option>
+    <option value="Unique">Unique</option>
+    <option value="Mensuel">Mensuel</option>
+    <option value="Hebdomadaire">Hebdomadaire</option>
+  </select>
+  <select name="methode" required>
+    <option value="">Méthode de paiement</option>
+    <option value="MonCash">MonCash</option>
+    <option value="Western Union">Western Union</option>
+    <option value="PayPal">PayPal</option>
+    <option value="Autre">Autre</option>
+  </select>
+  <textarea name="commentaire" placeholder="Commentaire (optionnel)"></textarea>
+  <button type="submit">S'inscrire et Payer</button>
+  <div class="message" id="msg"></div>
+</form>
 
-    <label>Prénom :</label>
-    <input type="text" name="prenom" required>
+<script>
+  document.getElementById("investForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    document.getElementById("msg").textContent = "Envoi en cours...";
 
-    <label>Date de Naissance :</label>
-    <input type="date" name="dob" required>
+    const form = e.target;
+    const data = {};
+    for (let element of form.elements) {
+      if (element.name) {
+        data[element.name] = element.value;
+      }
+    }
 
-    <label>Email :</label>
-    <input type="email" name="email" required>
-
-    <label>Pays :</label>
-    <input type="text" name="pays" required>
-
-    <label>Téléphone :</label>
-    <input type="tel" name="tel" placeholder="+509 3456 7890" required>
-
-    <label>Profession :</label>
-    <input type="text" name="profession">
-
-    <label>Type de pièce d'identité :</label>
-    <input type="text" name="piece">
-
-    <label>Montant à investir (USD) :</label>
-    <input type="number" name="montant">
-
-    <label>Fréquence de participation :</label>
-    <select name="frequence">
-      <option value="Hebdomadaire">Hebdomadaire</option>
-      <option value="Mensuelle">Mensuelle</option>
-      <option value="Trimestrielle">Trimestrielle</option>
-    </select>
-
-    <label>Méthode de Paiement :</label>
-    <select name="methode" required>
-      <option value="Natcash">Natcash</option>
-      <option value="Moncash">Moncash</option>
-      <option value="PayPal">PayPal</option>
-      <option value="Carte">Carte de Crédit/Débit</option>
-      <option value="Cash">Cash (paiement manuel)</option>
-    </select>
-
-    <label>Commentaire :</label>
-    <textarea name="commentaire" rows="3"></textarea>
-
-    <button type="submit">S'inscrire et Payer</button>
-    <div class="message" id="responseMsg"></div>
-  </form>
-
-  <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycby8IdR_ZQnky_Shi3xDA5S-uFaJOnLQcdmNs5dXuxxVOD_pZvW5IkZVN9KRJ-fstiuW/exec";
-    const form = document.getElementById('membershipForm');
-    const msg = document.getElementById('responseMsg');
-
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      msg.textContent = "Envoi en cours...";
-
-      const formData = new FormData(form);
-      const data = {};
-      formData.forEach((value, key) => (data[key] = value));
-
-      fetch(scriptURL, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      .then(response => {
-        if (response.ok) {
-          msg.style.color = "green";
-          msg.textContent = "Merci pour votre inscription !";
-          form.reset();
-        } else {
-          throw new Error("Erreur lors de la soumission");
-        }
-      })
-      .catch(error => {
-        console.error("Erreur:", error);
-        msg.style.color = "red";
-        msg.textContent = "Erreur. Veuillez réessayer.";
-      });
+    fetch("https://script.google.com/macros/s/AKfycbyDd0WqL149t5yNfMNuNC5xjBGGke8K24MqeSuGsfxKizTvBVp5YOstWoyPtP6nVinF/exec", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res) => res.text())
+    .then((msg) => {
+      document.getElementById("msg").textContent = msg;
+      form.reset();
+    })
+    .catch((err) => {
+      document.getElementById("msg").textContent = "Erreur réseau : " + err.message;
     });
-  </script>
+  });
+</script>
 
 </body>
 </html>

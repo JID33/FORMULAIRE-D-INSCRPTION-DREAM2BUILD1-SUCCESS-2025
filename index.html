@@ -1,129 +1,174 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Formulaire d'Investissement</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background-color: #e9ecef; /* Arrière-plan doux */
-      padding: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh; /* Prend toute la hauteur de la fenêtre */
-      margin: 0;
-    }
-    form {
-      background-color: #ffffff; /* Fond du formulaire blanc */
-      padding: 30px;
-      border-radius: 10px; /* Coins légèrement arrondis */
-      max-width: 500px; /* Largeur maximale du formulaire */
-      width: 100%; /* S'adapte à la largeur disponible */
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1); /* Ombre douce */
-    }
-    h2 {
-      text-align: center;
-      color: #343a40; /* Couleur du titre */
-      margin-bottom: 20px;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 6px; /* Coins arrondis pour les champs */
-      border: 1px solid #ced4da; /* Bordure des champs */
-      box-sizing: border-box; /* Assure que le padding n'augmente pas la largeur totale */
-    }
-    input:focus, select:focus, textarea:focus {
-      border-color: #80bdff; /* Bordure bleue au focus */
-      outline: 0;
-      box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); /* Ombre au focus */
-    }
-    button {
-      width: 100%;
-      background-color: #007BFF; /* Couleur bleue du bouton */
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
-      transition: background-color 0.2s ease-in-out; /* Transition douce au survol */
-    }
-    button:hover {
-      background-color: #0056b3; /* Bleu plus foncé au survol */
-    }
-    .message {
-      margin-top: 20px;
-      font-weight: bold;
-      text-align: center;
-      color: #343a40; /* Couleur du message */
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Formulaire d'Investissement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #007bff;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
-<form id="investForm">
-  <h2>Formulaire d'Investissement</h2>
-  <input type="text" name="nom" placeholder="Nom" required>
-  <input type="text" name="prenom" placeholder="Prénom" required>
-  <input type="date" name="dob" placeholder="Date de naissance" required>
-  <input type="email" name="email" placeholder="Email" required>
-  <input type="text" name="pays" placeholder="Pays" required>
-  <input type="text" name="tel" placeholder="Téléphone" required>
-  <input type="text" name="profession" placeholder="Profession" required>
-  <input type="text" name="piece" placeholder="Type de pièce d'identité" required>
-  <input type="number" name="montant" placeholder="Montant investi (en USD)" required>
-  <select name="frequence" required>
-    <option value="">Fréquence</option>
-    <option value="Unique">Unique</option>
-    <option value="Mensuel">Mensuel</option>
-    <option value="Hebdomadaire">Hebdomadaire</option>
-  </select>
-  <select name="methode" required>
-    <option value="">Méthode de paiement</option>
-    <option value="MonCash">MonCash</option>
-    <option value="Western Union">Western Union</option>
-    <option value="PayPal">PayPal</option>
-    <option value="Autre">Autre</option>
-  </select>
-  <textarea name="commentaire" placeholder="Commentaire (optionnel)"></textarea>
-  <button type="submit">S'inscrire et Payer</button>
-  <div class="message" id="msg"></div>
-</form>
+<div class="container">
+    <h2>Formulaire d'Investissement</h2>
+
+    <form id="investForm">
+        <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" required>
+        </div>
+        <div class="form-group">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" name="prenom" required>
+        </div>
+        <div class="form-group">
+            <label for="dob">Date de naissance</label>
+            <input type="date" id="dob" name="dob" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="pays">Pays</label>
+            <input type="text" id="pays" name="pays" required>
+        </div>
+        <div class="form-group">
+            <label for="tel">Téléphone</label>
+            <input type="text" id="tel" name="tel" required>
+        </div>
+        <div class="form-group">
+            <label for="profession">Profession</label>
+            <input type="text" id="profession" name="profession" required>
+        </div>
+        <div class="form-group">
+            <label for="piece">Type de pièce d'identité</label>
+            <input type="text" id="piece" name="piece" required>
+        </div>
+        <div class="form-group">
+            <label for="montant">Montant investi (en USD)</label>
+            <input type="number" id="montant" name="montant" required>
+        </div>
+        <div class="form-group">
+            <label for="frequence">Fréquence</label>
+            <select id="frequence" name="frequence" required>
+                <option value="">Sélectionner</option>
+                <option value="Unique">Unique</option>
+                <option value="Mensuel">Mensuel</option>
+                <option value="Hebdomadaire">Hebdomadaire</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="methode">Méthode de paiement</label>
+            <select id="methode" name="methode" required>
+                <option value="">Sélectionner</option>
+                <option value="MonCash">MonCash</option>
+                <option value="Western Union">Western Union</option>
+                <option value="PayPal">PayPal</option>
+                <option value="Autre">Autre</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="commentaire">Commentaire (optionnel)</label>
+            <textarea id="commentaire" name="commentaire"></textarea>
+        </div>
+        <button type="submit">S'inscrire et Payer</button>
+        <div class="message" id="msg"></div>
+    </form>
+</div>
 
 <script>
-  document.getElementById("investForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    document.getElementById("msg").textContent = "Envoi en cours...";
+    document.getElementById("investForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        document.getElementById("msg").textContent = "Envoi en cours...";
 
-    const form = e.target;
-    const data = {};
-    for (let element of form.elements) {
-      if (element.name) {
-        data[element.name] = element.value;
-      }
-    }
+        const form = e.target;
+        const data = {};
+        for (let element of form.elements) {
+            if (element.name) {
+                data[element.name] = element.value;
+            }
+        }
 
-    // L'URL de votre script Google Apps est insérée ici
-    fetch("https://script.google.com/macros/s/AKfycbwDkLNXCsgUaaSzAS0C5kztKDPYruT1L4Ffl_nKkUH0K7M-3qYq0MsbGakTYEgBKo-f/exec", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res) => res.text())
-    .then((msg) => {
-      document.getElementById("msg").textContent = msg;
-      form.reset(); // Réinitialise le formulaire après l'envoi
-    })
-    .catch((err) => {
-      document.getElementById("msg").textContent = "Erreur réseau : " + err.message;
-    });
-  });
+        fetch("https://script.google.com/macros/s/AKfycbwDkLNXCsgUaaSzAS0C5kztKDPYruT1L4Ffl_nKkUH0K7M-3qYq0MsbGakTYEgBKo-f/exec", {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then((res) => res.text())
+        .then((msg) => {
+            document.getElementById("msg").textContent = msg;
+            form.reset();
+        })
+        .catch((err) => {
+            document.getElementById("msg").textContent = "Erreur réseau : " + err.message;
+        });
+    });
 </script>
 
 </body>

@@ -6,45 +6,52 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #f1f1f1;
+      background-color: #f5f8ff;
+      padding: 20px;
     }
     form {
-      background-color: #fff;
+      background-color: white;
       padding: 20px;
-      max-width: 600px;
-      margin: auto;
       border-radius: 8px;
-      box-shadow: 0 0 10px #ccc;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
     }
     label {
       display: block;
-      margin-top: 10px;
+      margin-top: 15px;
       font-weight: bold;
     }
     input, select, textarea, button {
       width: 100%;
-      padding: 10px;
+      padding: 8px;
       margin-top: 5px;
+      border-radius: 4px;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      box-sizing: border-box;
     }
     button {
-      background-color: #4CAF50;
+      background-color: #007bff;
       color: white;
-      font-size: 16px;
+      margin-top: 20px;
       cursor: pointer;
-      margin-top: 15px;
     }
-    .success {
+    button:hover {
+      background-color: #0056b3;
+    }
+    #status {
+      margin-top: 15px;
       text-align: center;
-      color: green;
-      margin-top: 10px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <form id="investment-form">
+  <form id="investmentForm">
     <h2>Devenir Membre</h2>
     <p>Remplissez le formulaire ci-dessous pour devenir membre et participer à nos rotations.</p>
 
@@ -64,66 +71,78 @@
     <input type="text" name="pays" required>
 
     <label>Téléphone :</label>
-    <input type="tel" name="tel" placeholder="+509 3456 7890" required>
+    <input type="text" name="tel" placeholder="+509 3456 7890" required>
 
     <label>Profession :</label>
     <input type="text" name="profession">
 
-    <label>Numéro de pièce d'identité :</label>
+    <label>Type de pièce d'identité :</label>
     <input type="text" name="piece">
 
-    <label>Montant de l’investissement ($USD) :</label>
-    <input type="number" name="montant" required>
+    <label>Montant à investir :</label>
+    <input type="number" name="montant" min="0">
 
-    <label>Fréquence :</label>
-    <select name="frequence" required>
-      <option value="">-- Choisissez --</option>
-      <option value="unique">Unique</option>
-      <option value="mensuelle">Mensuelle</option>
+    <label>Fréquence de participation :</label>
+    <select name="frequence">
+      <option value="">Choisissez</option>
+      <option value="Hebdomadaire">Hebdomadaire</option>
+      <option value="Mensuelle">Mensuelle</option>
+      <option value="Trimestrielle">Trimestrielle</option>
     </select>
 
     <label>Méthode de Paiement :</label>
     <select name="methode" required>
-      <option value="">-- Choisissez --</option>
-      <option value="natcash">Natcash</option>
-      <option value="moncash">Moncash</option>
-      <option value="paypal">PayPal</option>
-      <option value="carte">Carte de Crédit/Débit</option>
-      <option value="cash">Cash (paiement manuel)</option>
+      <option value="">Choisissez une méthode</option>
+      <option value="Natcash">Natcash</option>
+      <option value="Moncash">Moncash</option>
+      <option value="PayPal">PayPal</option>
+      <option value="Carte de Crédit/Débit">Carte de Crédit/Débit</option>
+      <option value="Cash (paiement manuel)">Cash (paiement manuel)</option>
     </select>
 
-    <label>Commentaire (facultatif) :</label>
+    <label>Commentaire :</label>
     <textarea name="commentaire" rows="3"></textarea>
 
     <button type="submit">S'inscrire et Payer</button>
-    <div class="success" id="msg"></div>
+
+    <div id="status"></div>
   </form>
 
   <script>
-    const form = document.getElementById("investment-form");
-    const msg = document.getElementById("msg");
+    const form = document.getElementById("investmentForm");
+    const statusDiv = document.getElementById("status");
 
     form.addEventListener("submit", function(e) {
       e.preventDefault();
-      const data = Object.fromEntries(new FormData(form).entries());
+      statusDiv.textContent = "Envoi en cours...";
 
-      fetch("https://script.google.com/macros/s/AKfycbyHupEZXqjdpD-xtJDjSRQw-nQSUOODrtWU6EAUPnRhQdwkJbtkHaYs9Q5R8CTI7t18/exec", {
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+
+      fetch("https://script.google.com/macros/s/AKfycbyPtfWUa3ed7VPwbMqQG3sWL335yGxnMqUmQ8O9WnwjgBNEs95vQErKVpYMi6tn95TU/exec", {
         method: "POST",
+        body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
+        }
       })
-      .then(res => res.text())
-      .then(response => {
-        msg.textContent = "Inscription enregistrée avec succès !";
-        form.reset();
+      .then(response => response.text())
+      .then(result => {
+        if (result.toLowerCase().includes("succès") || result.toLowerCase().includes("success")) {
+          statusDiv.textContent = "Inscription enregistrée avec succès.";
+          form.reset();
+        } else {
+          statusDiv.textContent = "Erreur : " + result;
+        }
       })
       .catch(error => {
-        msg.textContent = "Erreur. Veuillez réessayer.";
-        console.error("Erreur:", error);
+        statusDiv.textContent = "Erreur réseau : " + error;
       });
     });
   </script>
 </body>
 </html>
+

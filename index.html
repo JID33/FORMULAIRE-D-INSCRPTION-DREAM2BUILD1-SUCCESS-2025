@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulaire d'Investissement</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+      background-color: #f5f7fa;
+    }
+    h2 {
+      text-align: center;
+      color: #2a7ae2;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      background-color: #2a7ae2;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #1e5bbf;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Devenir Membre - Investissement Rotatif</h2>
+
+  <form action="https://example.com/submit" method="post">
+    
+    <h3>Informations Personnelles</h3>
+    
+    <label for="nom">Nom :</label>
+    <input type="text" id="nom" name="nom" required>
+
+    <label for="prenom">Prénom :</label>
+    <input type="text" id="prenom" name="prenom" required>
+
+    <label for="dob">Date de Naissance :</label>
+    <input type="date" id="dob" name="dob" required>
+
+    <label for="email">E-mail :</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="pays">Pays :</label>
+    <input type="text" id="pays" name="pays" required>
+
+    <label for="tel">Téléphone :</label>
+    <input type="tel" id="tel" name="tel" placeholder="+509 3456 7890" required>
+
+    <label for="profession">Profession :</label>
+    <input type="text" id="profession" name="profession">
+
+    <label for="piece">Numéro de Pièce d’Identité :</label>
+    <input type="text" id="piece" name="piece">
+
+    <h3>Investissement</h3>
+
+    <label for="montant">Montant de l'investissement (USD) :</label>
+    <input type="number" id="montant" name="montant" min="10" step="1" required>
+
+    <label for="frequence">Fréquence de participation :</label>
+    <select id="frequence" name="frequence" required>
+      <option value="mensuelle">Mensuelle</option>
+      <option value="bimensuelle">Bimensuelle</option>
+      <option value="trimestrielle">Trimestrielle</option>
+    </select>
+
+    <label for="methode">Méthode de Paiement :</label>
+    <select id="methode" name="methode" required>
+      <option value="natcash">Natcash</option>
+      <option value="moncash">Moncash</option>
+      <option value="paypal">PayPal</option>
+      <option value="carte">Carte de Crédit/Débit</option>
+      <option value="cash">Cash (paiement manuel)</option>
+    </select>
+
+    <label for="commentaire">Commentaire (optionnel) :</label>
+    <textarea id="commentaire" name="commentaire" rows="3"></textarea>
+
+    <button type="submit">S'inscrire et Payer</button>
+
+  </form>
+
+</body>
+</html>

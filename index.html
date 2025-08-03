@@ -6,43 +6,43 @@
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background-color: #e9ecef;
+      background-color: #e9ecef; /* Arrière-plan doux */
       padding: 40px;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      min-height: 100vh; /* Prend toute la hauteur de la fenêtre */
       margin: 0;
     }
     form {
-      background-color: #ffffff;
+      background-color: #ffffff; /* Fond du formulaire blanc */
       padding: 30px;
-      border-radius: 10px;
-      max-width: 500px;
-      width: 100%;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      border-radius: 10px; /* Coins légèrement arrondis */
+      max-width: 500px; /* Largeur maximale du formulaire */
+      width: 100%; /* S'adapte à la largeur disponible */
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1); /* Ombre douce */
     }
     h2 {
       text-align: center;
-      color: #343a40;
+      color: #343a40; /* Couleur du titre */
       margin-bottom: 20px;
     }
     input, select, textarea {
       width: 100%;
       padding: 12px;
       margin: 10px 0;
-      border-radius: 6px;
-      border: 1px solid #ced4da;
-      box-sizing: border-box; /* Assure que le padding n'augmente pas la largeur */
+      border-radius: 6px; /* Coins arrondis pour les champs */
+      border: 1px solid #ced4da; /* Bordure des champs */
+      box-sizing: border-box; /* Assure que le padding n'augmente pas la largeur totale */
     }
     input:focus, select:focus, textarea:focus {
-      border-color: #80bdff;
+      border-color: #80bdff; /* Bordure bleue au focus */
       outline: 0;
-      box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+      box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); /* Ombre au focus */
     }
     button {
       width: 100%;
-      background-color: #007BFF;
+      background-color: #007BFF; /* Couleur bleue du bouton */
       color: white;
       border: none;
       padding: 12px;
@@ -50,16 +50,16 @@
       cursor: pointer;
       font-size: 16px;
       font-weight: bold;
-      transition: background-color 0.2s ease-in-out;
+      transition: background-color 0.2s ease-in-out; /* Transition douce au survol */
     }
     button:hover {
-      background-color: #0056b3;
+      background-color: #0056b3; /* Bleu plus foncé au survol */
     }
     .message {
       margin-top: 20px;
       font-weight: bold;
       text-align: center;
-      color: #343a40;
+      color: #343a40; /* Couleur du message */
     }
   </style>
 </head>
@@ -107,6 +107,7 @@
       }
     }
 
+    // L'URL de votre script Google Apps est insérée ici
     fetch("https://script.google.com/macros/s/AKfycbwDkLNXCsgUaaSzAS0C5kztKDPYruT1L4Ffl_nKkUH0K7M-3qYq0MsbGakTYEgBKo-f/exec", {
       method: "POST",
       body: JSON.stringify(data),
@@ -117,7 +118,7 @@
     .then((res) => res.text())
     .then((msg) => {
       document.getElementById("msg").textContent = msg;
-      form.reset();
+      form.reset(); // Réinitialise le formulaire après l'envoi
     })
     .catch((err) => {
       document.getElementById("msg").textContent = "Erreur réseau : " + err.message;

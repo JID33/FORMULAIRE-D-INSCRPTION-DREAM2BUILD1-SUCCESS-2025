@@ -6,93 +6,85 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f1f1f1;
+    }
+    form {
+      background-color: #fff;
       padding: 20px;
       max-width: 600px;
       margin: auto;
-      background-color: #f5f7fa;
-    }
-    h2 {
-      text-align: center;
-      color: #2a7ae2;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
     }
     label {
       display: block;
       margin-top: 10px;
+      font-weight: bold;
     }
-    input, select, textarea {
+    input, select, textarea, button {
       width: 100%;
-      padding: 8px;
+      padding: 10px;
       margin-top: 5px;
-      border-radius: 5px;
       border: 1px solid #ccc;
+      border-radius: 5px;
     }
     button {
-      margin-top: 20px;
-      background-color: #2a7ae2;
+      background-color: #4CAF50;
       color: white;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
       font-size: 16px;
-      width: 100%;
+      cursor: pointer;
+      margin-top: 15px;
     }
-    button:hover {
-      background-color: #1e5bbf;
-    }
-    .success-message {
-      margin-top: 20px;
+    .success {
       text-align: center;
       color: green;
-      font-weight: bold;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
+  <form id="investment-form">
+    <h2>Devenir Membre</h2>
+    <p>Remplissez le formulaire ci-dessous pour devenir membre et participer à nos rotations.</p>
 
-  <h2>Devenir Membre - Investissement Rotatif</h2>
+    <label>Nom :</label>
+    <input type="text" name="nom" required>
 
-  <form id="investForm">
-    <h3>Informations Personnelles</h3>
-    
-    <label for="nom">Nom :</label>
-    <input type="text" id="nom" name="nom" required>
+    <label>Prénom :</label>
+    <input type="text" name="prenom" required>
 
-    <label for="prenom">Prénom :</label>
-    <input type="text" id="prenom" name="prenom" required>
+    <label>Date de Naissance :</label>
+    <input type="date" name="dob" required>
 
-    <label for="dob">Date de Naissance :</label>
-    <input type="date" id="dob" name="dob" required>
+    <label>Email :</label>
+    <input type="email" name="email" required>
 
-    <label for="email">E-mail :</label>
-    <input type="email" id="email" name="email" required>
+    <label>Pays :</label>
+    <input type="text" name="pays" required>
 
-    <label for="pays">Pays :</label>
-    <input type="text" id="pays" name="pays" required>
+    <label>Téléphone :</label>
+    <input type="tel" name="tel" placeholder="+509 3456 7890" required>
 
-    <label for="tel">Téléphone :</label>
-    <input type="tel" id="tel" name="tel" placeholder="+509 3456 7890" required>
+    <label>Profession :</label>
+    <input type="text" name="profession">
 
-    <label for="profession">Profession :</label>
-    <input type="text" id="profession" name="profession">
+    <label>Numéro de pièce d'identité :</label>
+    <input type="text" name="piece">
 
-    <label for="piece">Numéro de Pièce d’Identité :</label>
-    <input type="text" id="piece" name="piece">
+    <label>Montant de l’investissement ($USD) :</label>
+    <input type="number" name="montant" required>
 
-    <h3>Investissement</h3>
-
-    <label for="montant">Montant de l'investissement (USD) :</label>
-    <input type="number" id="montant" name="montant" min="10" step="1" required>
-
-    <label for="frequence">Fréquence de participation :</label>
-    <select id="frequence" name="frequence" required>
+    <label>Fréquence :</label>
+    <select name="frequence" required>
+      <option value="">-- Choisissez --</option>
+      <option value="unique">Unique</option>
       <option value="mensuelle">Mensuelle</option>
-      <option value="bimensuelle">Bimensuelle</option>
-      <option value="trimestrielle">Trimestrielle</option>
     </select>
 
-    <label for="methode">Méthode de Paiement :</label>
-    <select id="methode" name="methode" required>
+    <label>Méthode de Paiement :</label>
+    <select name="methode" required>
+      <option value="">-- Choisissez --</option>
       <option value="natcash">Natcash</option>
       <option value="moncash">Moncash</option>
       <option value="paypal">PayPal</option>
@@ -100,49 +92,38 @@
       <option value="cash">Cash (paiement manuel)</option>
     </select>
 
-    <label for="commentaire">Commentaire (optionnel) :</label>
-    <textarea id="commentaire" name="commentaire" rows="3"></textarea>
+    <label>Commentaire (facultatif) :</label>
+    <textarea name="commentaire" rows="3"></textarea>
 
     <button type="submit">S'inscrire et Payer</button>
+    <div class="success" id="msg"></div>
   </form>
 
-  <div id="message" class="success-message"></div>
-
   <script>
-    document.getElementById("investForm").addEventListener("submit", function(e) {
+    const form = document.getElementById("investment-form");
+    const msg = document.getElementById("msg");
+
+    form.addEventListener("submit", function(e) {
       e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
 
-      const formData = {
-        nom: document.getElementById("nom").value,
-        prenom: document.getElementById("prenom").value,
-        dob: document.getElementById("dob").value,
-        email: document.getElementById("email").value,
-        pays: document.getElementById("pays").value,
-        tel: document.getElementById("tel").value,
-        profession: document.getElementById("profession").value,
-        piece: document.getElementById("piece").value,
-        montant: document.getElementById("montant").value,
-        frequence: document.getElementById("frequence").value,
-        methode: document.getElementById("methode").value,
-        commentaire: document.getElementById("commentaire").value
-      };
-
-      fetch("https://script.google.com/macros/s/AKfycbwOak5BknMopUHPX72kxDNPWPEOpJBRaEcscUhYjhxDtKmkFlaVQETpbT75HXbMVuLH1g/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbyHupEZXqjdpD-xtJDjSRQw-nQSUOODrtWU6EAUPnRhQdwkJbtkHaYs9Q5R8CTI7t18/exec", {
         method: "POST",
-        body: JSON.stringify(formData),
-        headers: { "Content-Type": "application/json" }
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
       })
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById("investForm").reset();
-        document.getElementById("message").innerText = "Formulaire soumis avec succès !";
+      .then(res => res.text())
+      .then(response => {
+        msg.textContent = "Inscription enregistrée avec succès !";
+        form.reset();
       })
       .catch(error => {
-        console.error("Erreur :", error);
-        alert("Une erreur est survenue. Veuillez réessayer.");
+        msg.textContent = "Erreur. Veuillez réessayer.";
+        console.error("Erreur:", error);
       });
     });
   </script>
-
 </body>
 </html>

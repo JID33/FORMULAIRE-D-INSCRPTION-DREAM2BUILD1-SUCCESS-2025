@@ -40,6 +40,12 @@
     button:hover {
       background-color: #1e5bbf;
     }
+    .success-message {
+      margin-top: 20px;
+      text-align: center;
+      color: green;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -47,7 +53,6 @@
   <h2>Devenir Membre - Investissement Rotatif</h2>
 
   <form id="investForm">
-    
     <h3>Informations Personnelles</h3>
     
     <label for="nom">Nom :</label>
@@ -99,8 +104,9 @@
     <textarea id="commentaire" name="commentaire" rows="3"></textarea>
 
     <button type="submit">S'inscrire et Payer</button>
-
   </form>
+
+  <div id="message" class="success-message"></div>
 
   <script>
     document.getElementById("investForm").addEventListener("submit", function(e) {
@@ -128,8 +134,8 @@
       })
       .then(response => response.text())
       .then(data => {
-        alert("Formulaire soumis avec succès !");
         document.getElementById("investForm").reset();
+        document.getElementById("message").innerText = "Formulaire soumis avec succès !";
       })
       .catch(error => {
         console.error("Erreur :", error);

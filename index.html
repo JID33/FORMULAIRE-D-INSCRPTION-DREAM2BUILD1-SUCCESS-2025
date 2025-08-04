@@ -15,7 +15,6 @@
       margin: 0;
       padding: 20px;
     }
-
     .container {
       background-color: #ffffff;
       padding: 40px;
@@ -24,23 +23,19 @@
       max-width: 500px;
       width: 100%;
     }
-
     h2 {
       text-align: center;
       margin-bottom: 25px;
       color: #007bff;
     }
-
     .form-group {
       margin-bottom: 20px;
     }
-
     label {
       display: block;
       margin-bottom: 8px;
       font-weight: bold;
     }
-
     input, select, textarea {
       width: 100%;
       padding: 12px;
@@ -49,12 +44,10 @@
       box-sizing: border-box;
       transition: border-color 0.2s;
     }
-
     input:focus, select:focus, textarea:focus {
       border-color: #007bff;
       outline: none;
     }
-
     button {
       width: 100%;
       padding: 12px;
@@ -67,21 +60,17 @@
       cursor: pointer;
       transition: background-color 0.2s;
     }
-
     button:hover {
       background-color: #0056b3;
     }
-
     .message {
       margin-top: 20px;
       text-align: center;
       font-weight: bold;
     }
-
     .success {
       color: green;
     }
-
     .error {
       color: red;
     }
@@ -173,23 +162,23 @@
       }
     }
 
-    fetch("https://script.google.com/macros/s/AKfycbwRqLKgaQEUW3adADd_kDbTdNd9r7ioruIS4jUcSdVmEHECkdT-o-Geyt7XNpGDI7Qg/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbxalcw3ywmovIrasI1gMBl90m6eWrtlHWKKrARbuLfpu3DVO5Or5J9tt6bVw6sJnMIr/exec", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
     })
-      .then(res => res.text())
-      .then(responseText => {
-        msg.textContent = responseText;
-        msg.className = "message success";
-        form.reset();
-      })
-      .catch(error => {
-        msg.textContent = "Erreur d'envoi : " + error.message;
-        msg.className = "message error";
-      });
+    .then(res => res.text())
+    .then(responseText => {
+      msg.textContent = responseText;
+      msg.className = "message success";
+      form.reset();
+    })
+    .catch(error => {
+      msg.textContent = "Erreur d'envoi : " + error.message;
+      msg.className = "message error";
+    });
   });
 </script>
 

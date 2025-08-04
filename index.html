@@ -155,19 +155,16 @@
     msg.textContent = "Envoi en cours...";
     msg.className = "message";
 
-    const data = {};
-    for (let element of form.elements) {
-      if (element.name) {
-        data[element.name] = element.value;
-      }
+    const formData = new FormData(form);
+    const params = new URLSearchParams();
+
+    for (let [key, value] of formData.entries()) {
+      params.append(key, value);
     }
 
     fetch("https://script.google.com/macros/s/AKfycbxalcw3ywmovIrasI1gMBl90m6eWrtlHWKKrARbuLfpu3DVO5Or5J9tt6bVw6sJnMIr/exec", {
       method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      body: params
     })
     .then(res => res.text())
     .then(responseText => {

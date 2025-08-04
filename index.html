@@ -42,11 +42,6 @@
       border: 1px solid #ced4da;
       border-radius: 6px;
       box-sizing: border-box;
-      transition: border-color 0.2s;
-    }
-    input:focus, select:focus, textarea:focus {
-      border-color: #007bff;
-      outline: none;
     }
     button {
       width: 100%;
@@ -58,21 +53,9 @@
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      transition: background-color 0.2s;
     }
     button:hover {
       background-color: #0056b3;
-    }
-    .message {
-      margin-top: 20px;
-      text-align: center;
-      font-weight: bold;
-    }
-    .success {
-      color: green;
-    }
-    .error {
-      color: red;
     }
   </style>
 </head>
@@ -81,7 +64,7 @@
 <div class="container">
   <h2>Formulaire d'Investissement</h2>
 
-  <form id="investForm">
+  <form id="investForm" method="POST">
     <div class="form-group">
       <label for="nom">Nom</label>
       <input type="text" id="nom" name="nom" required>
@@ -142,39 +125,30 @@
       <textarea id="commentaire" name="commentaire"></textarea>
     </div>
     <button type="submit">S'inscrire et Payer</button>
-    <div class="message" id="msg"></div>
   </form>
 </div>
 
 <script>
-  const form = document.getElementById("investForm");
-  const msg = document.getElementById("msg");
+  const form = document.getElementById('investForm');
 
-  form.addEventListener("submit", function (e) {
+  form.addEventListener('submit', function(e) {
     e.preventDefault();
-    msg.textContent = "Envoi en cours...";
-    msg.className = "message";
 
     const formData = new FormData(form);
-    const params = new URLSearchParams();
-
-    for (let [key, value] of formData.entries()) {
-      params.append(key, value);
-    }
 
     fetch("https://script.google.com/macros/s/AKfycbxalcw3ywmovIrasI1gMBl90m6eWrtlHWKKrARbuLfpu3DVO5Or5J9tt6bVw6sJnMIr/exec", {
       method: "POST",
-      body: params
+      body: formData
     })
-    .then(res => res.text())
-    .then(responseText => {
-      msg.textContent = responseText;
-      msg.className = "message success";
-      form.reset();
+    .then(response => {
+      if (response.ok) {
+        window.location.href = "https://yourdomain.com/confirmation.html"; // 🔁 Remplace avec l'URL de ta page de confirmation
+      } else {
+        alert("Une erreur est survenue lors de l’envoi.");
+      }
     })
     .catch(error => {
-      msg.textContent = "Erreur d'envoi : " + error.message;
-      msg.className = "message error";
+      alert("Erreur de soumission : " + error.message);
     });
   });
 </script>

@@ -57,6 +57,11 @@
     button:hover {
       background-color: #0056b3;
     }
+    .message {
+      margin-top: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -65,42 +70,15 @@
   <h2>Formulaire d'Investissement</h2>
 
   <form id="investForm" method="POST">
-    <div class="form-group">
-      <label for="nom">Nom</label>
-      <input type="text" id="nom" name="nom" required>
-    </div>
-    <div class="form-group">
-      <label for="prenom">Prénom</label>
-      <input type="text" id="prenom" name="prenom" required>
-    </div>
-    <div class="form-group">
-      <label for="dob">Date de naissance</label>
-      <input type="date" id="dob" name="dob" required>
-    </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
-    </div>
-    <div class="form-group">
-      <label for="pays">Pays</label>
-      <input type="text" id="pays" name="pays" required>
-    </div>
-    <div class="form-group">
-      <label for="tel">Téléphone</label>
-      <input type="text" id="tel" name="tel" required>
-    </div>
-    <div class="form-group">
-      <label for="profession">Profession</label>
-      <input type="text" id="profession" name="profession" required>
-    </div>
-    <div class="form-group">
-      <label for="piece">Type de pièce d'identité</label>
-      <input type="text" id="piece" name="piece" required>
-    </div>
-    <div class="form-group">
-      <label for="montant">Montant investi (en USD)</label>
-      <input type="number" id="montant" name="montant" required>
-    </div>
+    <div class="form-group"><label for="nom">Nom</label><input type="text" id="nom" name="nom" required></div>
+    <div class="form-group"><label for="prenom">Prénom</label><input type="text" id="prenom" name="prenom" required></div>
+    <div class="form-group"><label for="dob">Date de naissance</label><input type="date" id="dob" name="dob" required></div>
+    <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+    <div class="form-group"><label for="pays">Pays</label><input type="text" id="pays" name="pays" required></div>
+    <div class="form-group"><label for="tel">Téléphone</label><input type="text" id="tel" name="tel" required></div>
+    <div class="form-group"><label for="profession">Profession</label><input type="text" id="profession" name="profession" required></div>
+    <div class="form-group"><label for="piece">Type de pièce d'identité</label><input type="text" id="piece" name="piece" required></div>
+    <div class="form-group"><label for="montant">Montant investi (en USD)</label><input type="number" id="montant" name="montant" required></div>
     <div class="form-group">
       <label for="frequence">Fréquence</label>
       <select id="frequence" name="frequence" required>
@@ -120,19 +98,20 @@
         <option value="Autre">Autre</option>
       </select>
     </div>
-    <div class="form-group">
-      <label for="commentaire">Commentaire (optionnel)</label>
-      <textarea id="commentaire" name="commentaire"></textarea>
-    </div>
+    <div class="form-group"><label for="commentaire">Commentaire (optionnel)</label><textarea id="commentaire" name="commentaire"></textarea></div>
     <button type="submit">S'inscrire et Payer</button>
+    <div id="msg" class="message"></div>
   </form>
 </div>
 
 <script>
   const form = document.getElementById('investForm');
+  const msg = document.getElementById('msg');
 
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    msg.textContent = "Envoi en cours...";
+    msg.style.color = "#007bff";
 
     const formData = new FormData(form);
 
@@ -142,13 +121,18 @@
     })
     .then(response => {
       if (response.ok) {
-        window.location.href = "https://yourdomain.com/confirmation.html"; // 🔁 Remplace avec l'URL de ta page de confirmation
+        msg.textContent = "Formulaire envoyé avec succès ! Redirection...";
+        msg.style.color = "green";
+        setTimeout(() => {
+          window.location.href = "merci.html"; // ✅ Redirige vers une page de remerciement hébergée
+        }, 2000);
       } else {
-        alert("Une erreur est survenue lors de l’envoi.");
+        throw new Error("Réponse non valide.");
       }
     })
     .catch(error => {
-      alert("Erreur de soumission : " + error.message);
+      msg.textContent = "Erreur d'envoi : " + error.message;
+      msg.style.color = "red";
     });
   });
 </script>

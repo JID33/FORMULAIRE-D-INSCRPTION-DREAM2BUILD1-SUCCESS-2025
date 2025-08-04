@@ -115,7 +115,7 @@
 
     const formData = new FormData(form);
 
-    fetch("https://script.google.com/macros/s/AKfycbxalcw3ywmovIrasI1gMBl90m6eWrtlHWKKrARbuLfpu3DVO5Or5J9tt6bVw6sJnMIr/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbztSD3SDkclUWJiNsZCMZk1Bi9HW1WYNz-qDUQPI73M2pHynfWLXLCCwW4IksDjDd5E/exec", {
       method: "POST",
       body: formData
     })
@@ -124,7 +124,7 @@
         msg.textContent = "Formulaire envoyé avec succès ! Redirection...";
         msg.style.color = "green";
         setTimeout(() => {
-          window.location.href = "merci.html"; // ✅ Redirige vers une page de remerciement hébergée
+          window.location.href = "merci.html";
         }, 2000);
       } else {
         throw new Error("Réponse non valide.");
